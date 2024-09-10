@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../database";
 
-export interface Course {
+export interface ICourse {
     id: number,
     name: string,
     synopsis: string,
@@ -10,11 +10,11 @@ export interface Course {
     categoryId: number
 };
 
-export interface CourseCreationAttributes extends Optional<Course, "id" | "thumbnailUrl" | "featured"> {};
+export interface ICourseCreationAttributes extends Optional<ICourse, "id" | "thumbnailUrl" | "featured"> {};
 
-export interface CourseInstance extends Model<Course, CourseCreationAttributes>, Course {};
+export interface ICourseInstance extends Model<ICourse, ICourseCreationAttributes>, ICourse {};
 
-export const Course = sequelize.define<CourseInstance, Course>("Course", {
+export const Course = sequelize.define<ICourseInstance, ICourse>("Course", {
     id: {
         allowNull: false,
         autoIncrement: true,
