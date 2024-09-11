@@ -110,4 +110,4 @@ export const locale : Locale = {
         invalidCredentials: 'Nome de usuário e/ou senha incorretos',
       },
     }
-  }
+  };
