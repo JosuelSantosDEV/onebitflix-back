@@ -19,5 +19,15 @@ export const categoryService = {
             total: count
         }
 
+    },
+    findByIdWithCourses: async (id: string) => {
+        const categoryCourses = await Category.findByPk(id, {
+            attributes: ["id", "name"],
+            include: {
+                association: "courses",
+                attributes: ["id", "name", "synopsis",["thumbnail_url", "thumbnailUrl"]]
+            }
+        });
+        return categoryCourses;
     }
 };
