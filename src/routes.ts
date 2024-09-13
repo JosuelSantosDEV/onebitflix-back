@@ -9,6 +9,7 @@ router.get("/categories", categoriesControllers.index );
 router.get("/categories/:id", categoriesControllers.show );
 
 // Course
+router.get("/courses/featured", coursesControllers.featured);
 router.get("/courses/:id", coursesControllers.show);
 
 
