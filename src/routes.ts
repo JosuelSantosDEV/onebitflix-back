@@ -11,6 +11,7 @@ router.get("/categories/:id", categoriesControllers.show );
 // Course
 router.get("/courses/featured", coursesControllers.featured);
 router.get("/courses/newest", coursesControllers.newest);
+router.get("/courses/search", coursesControllers.search)
 router.get("/courses/:id", coursesControllers.show);
 
 
