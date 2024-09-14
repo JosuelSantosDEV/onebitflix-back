@@ -8,6 +8,8 @@ const app = express();
 // Define path of static files
 app.use(express.static("public"));
 
+app.use(express.json());
+
 // app.use(path, routes)
 app.use(adminJs.options.rootPath, adminJsRouter);
 
