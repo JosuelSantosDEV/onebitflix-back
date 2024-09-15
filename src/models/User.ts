@@ -2,6 +2,8 @@ import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../database";
 import bcrypt from "bcrypt";
 
+type checkPasswordCallback = (err?: Error, isSame?: boolean) => void;
+
 export interface IUser {
     id: number;
     firstName: string;
@@ -15,7 +17,10 @@ export interface IUser {
 
 export interface IUserCreationAttributes extends Optional<IUser, "id">{};
 
-export interface IUserInstance extends Model<IUser, IUserCreationAttributes>, IUser {};
+export interface IUserInstance extends Model<IUser, IUserCreationAttributes> , IUser {
+   checkPassword: (password: string, callbackfn: checkPasswordCallback) => void
+};
+
 
 export const User = sequelize.define<IUserInstance, IUser>("User", {
     id: {
@@ -68,3 +73,13 @@ export const User = sequelize.define<IUserInstance, IUser>("User", {
     }
   }
 });
+
+User.prototype.checkPassword = function (password : string, callbackfn: checkPasswordCallback) {
+  bcrypt.compare(password, this.password, (err, isSame) => {
+      if(err){
+          callbackfn(err, false);
+      }else {
+        callbackfn(err, isSame);
+      }
+  });
+};
