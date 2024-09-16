@@ -1,8 +1,8 @@
 import { User } from "../models";
-import { IUserCreationAttributes } from "../models/User";
+import { IUserCreationAttributes, IUserInstance } from "../models/User";
 
 export const userService = {
-    findByEmail: async (email: string) => {
+    findByEmail: async (email: string): Promise<IUserInstance | null> => {
         const user = await User.findOne({
             where: {
                 email

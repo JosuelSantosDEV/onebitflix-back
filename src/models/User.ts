@@ -18,7 +18,7 @@ export interface IUser {
 export interface IUserCreationAttributes extends Optional<IUser, "id">{};
 
 export interface IUserInstance extends Model<IUser, IUserCreationAttributes> , IUser {
-   checkPassword: (password: string, callbackfn: checkPasswordCallback) => void
+   checkPassword: (password: string, callbackfn: checkPasswordCallback) => void;
 };
 
 
