@@ -15,11 +15,25 @@ export const ensureAuth = (req: IAuthenticatedRequest, res: Response, next: Next
 
     const token = authorizationHeader.replace(/Bearer /, "");
 
-    jwtService.verifyToken(token, (err, decoded)=> {
+    jwtService.verifyToken(token, async (err, decoded)=> {
         if(err || typeof decoded === "undefined") return res.status(401).json({message: "not authorizate: invalid token"});
-        userService.findByEmail((decoded as JwtPayload).email).then(user => {
-            req.user = user;
-            next();
-        });
+        const user = await userService.findByEmail((decoded as JwtPayload).email);
+        req.user = user;
+        next();
     });
 };
+
+export function ensureAuthViaQuery(req:IAuthenticatedRequest , res: Response, next: NextFunction){
+    const {token} = req.query;
+
+    if(!token) return res.status(401).json({message: "not authorizate: not find token"});
+    if(typeof token !== "string") return res.status(400).json({message: "not authorizate: token type must be string"});
+
+    jwtService.verifyToken(token, async (err, decoded)=>{
+        if(err || typeof decoded === "undefined") return res.status(401).json({message: "not authorizate: invalid token"});
+
+        const user = await userService.findByEmail((decoded as JwtPayload).email);
+        req.user = user;
+        next();
+    })
+}

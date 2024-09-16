@@ -3,7 +3,7 @@ import { categoriesControllers } from "./controllers/categoriesController";
 import { coursesControllers } from "./controllers/coursesControllers";
 import { episodesController } from "./controllers/episodesController";
 import { authController } from "./controllers/authController";
-import { ensureAuth } from "./middlewares/auth";
+import { ensureAuth, ensureAuthViaQuery } from "./middlewares/auth";
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ router.get("/courses/search",  ensureAuth,coursesControllers.search)
 router.get("/courses/:id",  ensureAuth,coursesControllers.show);
 
 // Episode
-router.get("/episodes/stream",  ensureAuth,episodesController.strem);
+router.get("/episodes/stream",  ensureAuthViaQuery,episodesController.strem);
 
 
 
