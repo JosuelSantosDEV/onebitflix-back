@@ -11,8 +11,8 @@ export const coursesControllers = {
         } catch (error) {
             if(error instanceof Error){
                 return res.status(400).json({message: error.message});
-            }
-        }
+            };
+        };
     },
     // GET/courses/newest
     newest: async (req: Request, res: Response) => {
@@ -39,8 +39,8 @@ export const coursesControllers = {
         } catch (error) {
             if(error instanceof Error){
                 return res.status(400).json({message: error.message});
-            }
-        }
+            };
+        };
     },
     // GET/courses/:id
     show: async (req: Request, res: Response) => {
@@ -52,7 +52,7 @@ export const coursesControllers = {
         } catch (error) {
             if(error instanceof Error){
                 return res.status(400).json({message: error.message});
-            }
-        }
+            };
+        };
     }
 } 
