@@ -16,5 +16,19 @@ export const likeController = {
                 return res.status(400).json({ message: error.message });
             };
         }
+    },
+    // DELETE/likes/:id
+    delete: async (req: IAuthenticatedRequest, res: Response) => {
+        try {
+            const userId = req.user!.id;
+            const courseId = req.params.id;
+
+            await likeService.delete(userId, Number(courseId));
+            res.status(201).json({message: "delete sucesfull"});
+        } catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({ message: error.message });
+            };
+        }
     }
 };
