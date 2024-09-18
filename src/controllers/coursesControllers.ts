@@ -1,6 +1,9 @@
 import { Request, Response } from "express"
 import { courseService } from "../services/courseService";
 import { getPaginationParams } from "../helpers/getPaginationParams";
+import { IAuthenticatedRequest } from "../middlewares/auth";
+import { likeService } from "../services/likeService";
+import { favoriteService } from "../services/favoriteService";
 
 export const coursesControllers = {
     // GET/courses/featured
@@ -43,12 +46,21 @@ export const coursesControllers = {
         };
     },
     // GET/courses/:id
-    show: async (req: Request, res: Response) => {
+    show: async (req: IAuthenticatedRequest, res: Response) => {
         try {
-            const {id} = req.params;
+            const userId = req.user!.id
+            const courseId = req.params.id;
 
-            const course = await courseService.findByIdWithEpisodes(id);
-            return res.status(200).json(course);
+            const course = await courseService.findByIdWithEpisodes(courseId);
+
+            if(!course){
+                return res.status(404).json({message: "course not find"});
+            };
+            const liked = await likeService.isLiked(userId, Number(courseId));
+            const favorited = await favoriteService.isFavorited(userId, Number(courseId));
+
+            return res.json({...course.get(), liked, favorited});
+            
         } catch (error) {
             if(error instanceof Error){
                 return res.status(400).json({message: error.message});

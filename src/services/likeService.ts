@@ -1,4 +1,5 @@
 import { Like } from "../models";
+import { ILikeInstance } from "../models/Like";
 
 export const likeService = {
     create: async (userId: number, courseId: number) => {
@@ -15,5 +16,14 @@ export const likeService = {
                 courseId
             }
         });
+    },
+    isLiked: async (userId: number, courseId: number ) => {
+        const like = await Like.findOne({
+            where: {
+                userId,
+                courseId
+            }
+        });
+        return like !== null;
     }
 };
