@@ -20,6 +20,7 @@ router.get("/categories/:id",  ensureAuth,categoriesControllers.show );
 // Course
 router.get("/courses/featured",  ensureAuth,coursesControllers.featured);
 router.get("/courses/newest", coursesControllers.newest);
+router.get("/courses/popular", ensureAuth, coursesControllers.popular);
 router.get("/courses/search",  ensureAuth,coursesControllers.search)
 router.get("/courses/:id",  ensureAuth,coursesControllers.show);
 

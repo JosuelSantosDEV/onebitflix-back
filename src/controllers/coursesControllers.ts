@@ -28,6 +28,17 @@ export const coursesControllers = {
             }
         }
     },
+    // GET/courses/popular
+    popular: async (req: Request, res: Response) => {
+        try {
+            const topTen = await  courseService.getTopTenByLikes();
+            return res.status(200).json(topTen);
+        } catch (error) {
+            if(error instanceof Error){
+                return res.status(400).json({message: error.message});
+            }
+        }
+    },
     // GET/courses/search?name=
     search: async (req: Request, res: Response) => {
         try {
