@@ -40,6 +40,7 @@ router.post("/likes", ensureAuth, likeController.save);
 router.delete("/likes/:id", ensureAuth, likeController.delete);
 
 // User
+router.get("/users/current", ensureAuth, usersController.show);
 router.get("/users/current/watching", ensureAuth, usersController.watching);
 
 
