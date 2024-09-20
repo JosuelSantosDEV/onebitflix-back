@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize"
 import { sequelize } from "../database"
+import { IWatchTimeInstance } from "./WatchTime"
 
 
 export interface IEpisode {
@@ -14,7 +15,9 @@ export interface IEpisode {
 
 export interface IEpisodeCreationAttributes extends Optional<IEpisode, "id" | "videoUrl" | "secondsLong"> {};
 
-export interface IEpisodeInstance extends Model<IEpisode,IEpisodeCreationAttributes>, IEpisode{};
+export interface IEpisodeInstance extends Model<IEpisode,IEpisodeCreationAttributes>, IEpisode{
+  watchTime?: IWatchTimeInstance;
+};
 
 export const Episode = sequelize.define<IEpisodeInstance, IEpisode >("Episode", {
     id: {
