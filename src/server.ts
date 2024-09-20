@@ -1,9 +1,13 @@
 import express from "express";
 import { sequelize } from "./database";
 import { adminJs, adminJsRouter } from "./adminjs";
+import cors from "cors";
+
 import router from "./routes";
 
 const app = express();
+
+app.use(cors());
 
 // Define path of static files
 app.use(express.static("public"));
