@@ -16,6 +16,22 @@ export const usersController = {
             };
         };
     },
+    // PUT/users/current
+    update: async (req: IAuthenticatedRequest, res: Response) => {
+        try {
+            const userId = req.user!.id;
+            const { firstName, lastName, phone, email, birth} = req.body;
+
+            const updatedUser = await userService.update(userId, { firstName, lastName, phone, email, birth});
+
+            return res.json(updatedUser);
+            
+        } catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({ message: error.message });
+            };
+        };
+    },
     // GET/users/current/watching
     watching: async (req: IAuthenticatedRequest, res: Response) => {
         try {

@@ -41,6 +41,7 @@ router.delete("/likes/:id", ensureAuth, likeController.delete);
 
 // User
 router.get("/users/current", ensureAuth, usersController.show);
+router.put("/users/current", ensureAuth, usersController.update);
 router.get("/users/current/watching", ensureAuth, usersController.watching);
 
 

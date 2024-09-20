@@ -26,6 +26,7 @@ function filterLastEpisodesByCourse(episodes: IEpisodeInstance[]){
 };
 
 export const userService = {
+
     findByEmail: async (email: string): Promise<IUserInstance | null> => {
         const user = await User.findOne({
             where: {
@@ -34,10 +35,24 @@ export const userService = {
         });
         return user;
     },
+
     create: async (attributes: IUserCreationAttributes) => {
         const user = await User.create(attributes);
         return user;
     },
+
+    update: async (id: number, attributes: {
+        firstName: string,
+        lastName: string,
+        phone: string,
+        birth: Date,
+        email: string
+    }) => {
+        const [affectedRows, updatedUsers] = await User.update( attributes, { where: { id } , returning: true });
+        
+        return updatedUsers[0];
+    },
+
     getKeepWatchingList: async (id: number) => {
         const userWithWatchingEpisodes = await User.findByPk(id, {
             include: {
