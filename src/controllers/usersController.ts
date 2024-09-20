@@ -32,6 +32,26 @@ export const usersController = {
             };
         };
     },
+    // PUT/users/current/password
+    updatePassword: async (req: IAuthenticatedRequest, res: Response) => {
+        
+        const user = req.user!;
+        const { currentPassword, newPassword} = req.body;
+
+        user.checkPassword(currentPassword, async (err, isSame)=> {
+            try {
+                if(err) return res.status(400).json({message: err.message});
+                if(!isSame) return res.status(400).json({message:"Incorrect password"});
+
+                await userService.updatePassword(user.id, newPassword);
+                return res.status(204).send();
+            } catch (error) {
+                if (error instanceof Error) {
+                    return res.status(400).json({ message: error.message });
+                };
+            };
+        });
+    },
     // GET/users/current/watching
     watching: async (req: IAuthenticatedRequest, res: Response) => {
         try {
