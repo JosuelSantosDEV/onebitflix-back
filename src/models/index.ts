@@ -9,7 +9,7 @@ import { WatchTime } from "./WatchTime";
 // Association
 
 // Category --------------
-Category.hasMany(Course);
+Category.hasMany(Course, {as: "courses"});
 // Course ----------------
 Course.belongsTo(Category);
 Course.belongsToMany(User, { through: Favorite });
